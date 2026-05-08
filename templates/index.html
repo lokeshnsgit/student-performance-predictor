@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Performance Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Student Performance Predictor</h1>
+
+<p class="accuracy">Model Accuracy: {{ accuracy }}%</p>
+
+<form method="POST">
+
+<input type="number" name="hours" step="0.1" placeholder="Study Hours" required>
+
+<input type="number" name="attendance" placeholder="Attendance %" required>
+
+<input type="number" name="previous" placeholder="Previous Marks" required>
+
+<button type="submit">Predict Score</button>
+
+</form>
+
+{% if prediction %}
+
+<div class="result">
+Predicted Final Score: {{ prediction | round(2) }}
+</div>
+<img src="{{ url_for('static', filename='graph.png') }}" width="400">
+
+{% endif %}
+
+</div>
+
+</body>
+</html>
