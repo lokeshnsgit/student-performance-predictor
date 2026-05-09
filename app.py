@@ -1,3 +1,19 @@
+import sqlite3
+conn = sqlite3.connect('database.db')
+cursor = conn.cursor()
+
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE,
+    password TEXT
+)
+''')
+
+conn.commit()
+conn.close()
+
+
 from flask import Flask, render_template, request, redirect, url_for
 import numpy as np
 import pandas as pd
@@ -28,7 +44,14 @@ previous_marks = 70
 predictions = []
 
 for h in hours:
-    pred = model.predict([[h, attendance, previous_marks]])
+
+    graph_features = pd.DataFrame(
+        [[h, attendance, previous_marks]],
+        columns=['study_hours', 'attendance', 'previous_marks']
+    )
+
+    pred = model.predict(graph_features)
+
     predictions.append(pred[0])
 
 plt.figure()
@@ -39,6 +62,31 @@ plt.title("Study Hours vs Predicted Score")
 plt.savefig("static/graph.png")
 plt.close()
 
+# Signup page
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+
+    if request.method == 'POST':
+
+        username = request.form['username']
+        password = request.form['password']
+
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+
+        cursor.execute(
+            "INSERT INTO users (username, password) VALUES (?, ?)",
+            (username, password)
+        )
+
+        conn.commit()
+        conn.close()
+
+        return redirect('/')
+
+    return render_template('signup.html')
+
+
 # Login page
 @app.route('/', methods=['GET', 'POST'])
 def login():
@@ -48,11 +96,25 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        # Simple login
-        if username == "student" and password == "1234":
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+
+        cursor.execute(
+            "SELECT * FROM users WHERE username=? AND password=?",
+            (username, password)
+        )
+
+        user = cursor.fetchone()
+
+        conn.close()
+
+        if user:
             return redirect(url_for('home'))
         else:
-            return render_template('login.html', error="Invalid Username or Password")
+            return render_template(
+                'login.html',
+                error="Invalid Username or Password"
+            )
 
     return render_template('login.html')
 
@@ -68,7 +130,10 @@ def home():
         attendance = float(request.form['attendance'])
         previous_marks = float(request.form['previous'])
 
-        features = np.array([[study_hours, attendance, previous_marks]])
+        features = pd.DataFrame(
+            [[study_hours, attendance, previous_marks]],
+            columns=['study_hours', 'attendance', 'previous_marks']
+        )
 
         prediction = model.predict(features)[0]
 

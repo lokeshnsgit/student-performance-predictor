@@ -1,56 +1,82 @@
-body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+body{
+    margin:0;
+    font-family:Arial;
+    background:#f4f6f9;
 }
 
-.container {
-    background: white;
-    padding: 40px;
-    border-radius: 10px;
-    width: 350px;
-    box-shadow: 0px 10px 25px rgba(0,0,0,0.2);
-    text-align: center;
+.dashboard{
+    display:flex;
 }
 
-h1 {
-    margin-bottom: 20px;
+.sidebar{
+    width:220px;
+    height:100vh;
+    background:#1e293b;
+    color:white;
+    padding:20px;
 }
 
-input {
-    width: 90%;
-    padding: 10px;
-    margin: 8px 0;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+.sidebar h2{
+    margin-bottom:30px;
 }
 
-button {
-    width: 95%;
-    padding: 10px;
-    margin-top: 10px;
-    border: none;
-    background: #4facfe;
-    color: white;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
+.sidebar a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    margin:15px 0;
+    padding:10px;
+    border-radius:5px;
 }
 
-button:hover {
-    background: #2b8cff;
+.sidebar a:hover{
+    background:#334155;
 }
 
-.result {
-    margin-top: 15px;
-    font-size: 18px;
-    color: green;
+.main-content{
+    flex:1;
+    padding:30px;
 }
 
-.accuracy {
-    font-size: 14px;
-    color: gray;
+.top-card{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0px 2px 10px rgba(0,0,0,0.1);
+    margin-bottom:20px;
+}
+
+.predict-card{
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0px 2px 10px rgba(0,0,0,0.1);
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:5px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+.result-card{
+    margin-top:20px;
+    text-align:center;
 }

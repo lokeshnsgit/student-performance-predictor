@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Student Login</title>
+    <title>Student Signup</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
 
     <style>
 
         body{
             margin:0;
             padding:0;
-
             font-family:Arial;
-
             height:100vh;
 
             display:flex;
@@ -19,12 +20,12 @@
 
             background:linear-gradient(
                 135deg,
-                #0f172a,
-                #2563eb
+                #2563eb,
+                #7c3aed
             );
         }
 
-        .login-container{
+        .signup-container{
 
             width:350px;
 
@@ -36,7 +37,7 @@
 
             backdrop-filter:blur(10px);
 
-            box-shadow:0px 8px 30px rgba(0,0,0,0.3);
+            box-shadow:0px 8px 30px rgba(0,0,0,0.2);
 
             text-align:center;
 
@@ -76,7 +77,7 @@
 
             border-radius:10px;
 
-            background:#111827;
+            background:#0f172a;
 
             color:white;
 
@@ -88,27 +89,14 @@
         }
 
         button:hover{
-
-            background:#1f2937;
-
+            background:#1e293b;
             transform:scale(1.03);
         }
 
-        .error{
-
-            color:#ffb4b4;
-
-            margin-top:10px;
-        }
-
         a{
-
             display:block;
-
             margin-top:20px;
-
             color:white;
-
             text-decoration:none;
         }
 
@@ -122,9 +110,9 @@
 
 <body>
 
-<div class="login-container">
+<div class="signup-container">
 
-    <h1>🎓 Student Login</h1>
+    <h1>✨ Create Account</h1>
 
     <form method="POST">
 
@@ -139,17 +127,13 @@
         required>
 
         <button type="submit">
-            Login
+            Signup
         </button>
 
     </form>
 
-    {% if error %}
-        <p class="error">{{ error }}</p>
-    {% endif %}
-
-    <a href="/signup">
-        Create New Account
+    <a href="/">
+        Already have account? Login
     </a>
 
 </div>
